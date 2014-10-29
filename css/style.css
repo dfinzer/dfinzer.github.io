@@ -1,0 +1,44 @@
+body {
+    font-family: Helvetica;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+.content {
+    padding: 100px;
+    font-size: 40px;
+    height: 100%;
+}
+
+.rightContent {
+    display: none;
+    font-family: Times;
+    font-size: 30px;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding-left: 15px;
+}
+
+.content .title {
+    margin-bottom: 20px;
+    font-size: 60px;
+}
+
+.navItem a:hover {
+    color: #5F9F9F;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.separator {
+    float: left;
+    height: 100%;
+    border: 1px solid gray;
+}
+
+.rightSide {
+    width: 66%;
+}
