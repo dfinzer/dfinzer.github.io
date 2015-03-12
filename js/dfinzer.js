@@ -6,22 +6,3 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 ga('create', 'UA-16848831-8', 'auto');
 ga('send', 'pageview');
-
-(function() {
-    $('.aboutLink').click(function() {
-        $('.rightContent').hide();
-        $('#about').show();
-    });
-
-    $('.poemLink').click(function() {
-        $('.rightContent').hide();
-        $('#poem').show();
-        randomPoem.show();
-    });
-
-    $('.musingsLink').click(function() {
-        $('.rightContent').hide();
-        $('#musings').show();
-        randomPoem.show();
-    });
-})();
