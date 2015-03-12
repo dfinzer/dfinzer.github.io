@@ -1,10 +1,10 @@
 $('#viewport').css('background-color', '#000000');
 
-var WORLD_WIDTH = $('#viewport').width();
-var WORLD_HEIGHT = $('#viewport').height();
-var BALL_RADIUS = 30;
+var WORLD_WIDTH = window.innerWidth - 20;
+var WORLD_HEIGHT = window.innerHeight - 20;
+var BALL_RADIUS = Math.min(WORLD_WIDTH, WORLD_HEIGHT) / 20.0;
 var CUE_BALL_X_START = 0;
-var FIRST_BALL_X_START = 2 * WORLD_WIDTH / 3.0;
+var FIRST_BALL_X_START = WORLD_WIDTH / 2.0;
 var FIRST_BALL_Y_START = WORLD_HEIGHT / 2.0;
 var ROWS = 5;
 var COLORS = ["#D9853B", // orange
@@ -13,11 +13,14 @@ var COLORS = ["#D9853B", // orange
               "#005A31", // green
               "#FFE658" // yellow
 ];
+var IMAGES = [
+    'twitter-ball.svg',
+    'soundcloud-ball.svg',
+    'pinterest-ball.svg',
+    'medium-ball.svg',
+    'linkedin-ball.svg'
+];
 
-var DampenedBody = function(type, options) {
-    Physics.body.call(this, type, options);
-};
-DampenedBody.prototype = Object.create(Physics.body.prototype);
 
 Physics(function( world ) {
 
@@ -26,15 +29,20 @@ Physics(function( world ) {
         for (var i = 0; i < ROWS; i++) {
             var numBallsInRow = i + 1;
             for (var j = 0; j < numBallsInRow; j++) {
-                var ball = DampenedBody('circle', {
+                var ball = Physics.body('circle', {
                     x: FIRST_BALL_X_START + i * BALL_RADIUS * 2,
                     y: currentYStart + j * BALL_RADIUS * 2.2,
                     cof: 0,
                     radius: BALL_RADIUS,
                     styles: {
                         fillStyle: COLORS[(i + j) % 5]
-                    }
+                    },
+                    restitution: 0.8
                 });
+                ball.view = new Image();
+                ball.view.src = 'images/' + IMAGES[(i + j) % 5];
+                ball.view.width = BALL_RADIUS * 2;
+                ball.view.height = BALL_RADIUS * 2;
                 world.add(ball);
             }
             currentYStart -= BALL_RADIUS;
@@ -52,8 +60,8 @@ Physics(function( world ) {
     var cueBall = Physics.body('circle', {
         x: CUE_BALL_X_START,
         y: FIRST_BALL_Y_START,
-        vx: 2,
-        vy: 0,
+        vx: 10,
+        vy: .1,
         cof: 0,
         radius: BALL_RADIUS,
         styles: {
@@ -79,10 +87,12 @@ Physics(function( world ) {
 
     world.add(Physics.behavior('edge-collision-detection', {
         aabb: bounds,
-        restitution: 0.05
+        restitution: 0.1
     }) );
 
     world.add( Physics.behavior('body-impulse-response') );
-    world.add( Physics.behavior('body-collision-detection') );
+    world.add( Physics.behavior('body-collision-detection'), {
+        restitution: 0.1
+    });
     world.add( Physics.behavior('sweep-prune') );
 });

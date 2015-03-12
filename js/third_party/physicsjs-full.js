@@ -6693,6 +6693,14 @@ Physics.body('circle', function( parent ){
 
         // extended
         recalc: function(){
+            this.state.vel.x *= .5;
+            this.state.vel.y *= .5;
+            if (Math.abs(this.state.vel.x) < 1) {
+                this.state.vel.x = 0;
+            }
+            if (Math.abs(this.state.vel.y) < 1) {
+                this.state.vel.y = 0;
+            }
             parent.recalc.call(this);
             // moment of inertia
             this.moi = this.mass * this.geometry.radius * this.geometry.radius / 2;
