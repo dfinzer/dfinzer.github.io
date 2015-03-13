@@ -14,11 +14,26 @@ var COLORS = ["#D9853B", // orange
               "#FFE658" // yellow
 ];
 var IMAGES = [
-    'twitter-ball.svg',
-    'soundcloud-ball.svg',
-    'pinterest-ball.svg',
-    'medium-ball.svg',
-    'linkedin-ball.svg'
+    {
+        'link': "twitter.com",
+        'image': 'twitter-ball.svg'
+    },
+    {
+        'link': "http://soundcloud.com",
+        'image': 'soundcloud-ball.svg'
+    },
+    {
+        'link': "http://soundcloud.com",
+        'image': 'pinterest-ball.svg'
+    },
+    {
+        'link': "http://soundcloud.com",
+        'image': 'medium-ball.svg'
+    },
+    {
+        'link': "http://soundcloud.com",
+        'image': 'linkedin-ball.svg'
+    }
 ];
 
 
@@ -40,9 +55,10 @@ Physics(function( world ) {
                     restitution: 0.8
                 });
                 ball.view = new Image();
-                ball.view.src = 'images/' + IMAGES[(i + j) % 5];
+                ball.view.src = 'images/' + IMAGES[(i + j) % 5]['image'];
                 ball.view.width = BALL_RADIUS * 2;
                 ball.view.height = BALL_RADIUS * 2;
+                ball.view.href = 'http://twitter.com';
                 world.add(ball);
             }
             currentYStart -= BALL_RADIUS;
@@ -60,7 +76,7 @@ Physics(function( world ) {
     var cueBall = Physics.body('circle', {
         x: CUE_BALL_X_START,
         y: FIRST_BALL_Y_START,
-        vx: 10,
+        vx: 30,
         vy: .1,
         cof: 0,
         radius: BALL_RADIUS,
@@ -95,4 +111,21 @@ Physics(function( world ) {
         restitution: 0.1
     });
     world.add( Physics.behavior('sweep-prune') );
+
+    $("#viewport").click(function(evt) {
+        var clickedBall = world.findOne({$at: Physics.vector(evt.offsetX, evt.offsetY)});
+        if (clickedBall) {
+            var link = clickedBall.view.href;
+            var win = window.open(link, '_blank');
+            win.focus();
+        }
+    });
+    $("#viewport").mousemove(function(evt) {
+        var focusedBall = world.findOne({$at: Physics.vector(evt.offsetX, evt.offsetY)});
+        if (focusedBall) {
+            $('html,body').css('cursor','pointer');
+        } else {
+            $('html,body').css('cursor','default');
+        }
+    });
 });

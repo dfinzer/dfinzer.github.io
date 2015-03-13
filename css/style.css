@@ -1,6 +1,14 @@
 body {
-    /*background-color: #000000;*/
-    font-family: Helvetica;
+    font-family: Georgia;
+}
+
+#title {
+    color: white;
+    position: absolute;
+    z-index: 300;
+    font-size: 100px;
+    margin-left: 50px;
+    margin-top: 50px;
 }
 
 #viewport {
