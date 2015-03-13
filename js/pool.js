@@ -15,23 +15,23 @@ var COLORS = ["#D9853B", // orange
 ];
 var IMAGES = [
     {
-        'link': "twitter.com",
+        'link': "http://www.twitter.com/dfinzer",
         'image': 'twitter-ball.svg'
     },
     {
-        'link': "http://soundcloud.com",
+        'link': "https://soundcloud.com/devin-finzer/",
         'image': 'soundcloud-ball.svg'
     },
     {
-        'link': "http://soundcloud.com",
+        'link': "http://pinterest.com/dfinzer",
         'image': 'pinterest-ball.svg'
     },
     {
-        'link': "http://soundcloud.com",
+        'link': "https://medium.com/@devinfinzer",
         'image': 'medium-ball.svg'
     },
     {
-        'link': "http://soundcloud.com",
+        'link': "https://www.linkedin.com/profile/view?id=55525353",
         'image': 'linkedin-ball.svg'
     }
 ];
@@ -55,10 +55,11 @@ Physics(function( world ) {
                     restitution: 0.8
                 });
                 ball.view = new Image();
-                ball.view.src = 'images/' + IMAGES[(i + j) % 5]['image'];
+                var imageData = IMAGES[(i + j) % 5];
+                ball.view.src = 'images/' + imageData['image'];
                 ball.view.width = BALL_RADIUS * 2;
                 ball.view.height = BALL_RADIUS * 2;
-                ball.view.href = 'http://twitter.com';
+                ball.view.href = imageData['link'];
                 world.add(ball);
             }
             currentYStart -= BALL_RADIUS;
